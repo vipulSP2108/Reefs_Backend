@@ -121,7 +121,21 @@ app.post('/userdata', async (req, res) => {
 app.post('/addmodel', async (req, res) => {
     try {
         // Extract data from the request body
-        const { latitude, longitude, contactid, contactinfo, title, address, description, largeDescription, releaseDate, author, license, tags, size, smallestVisibleFeature, contributors, citation, visibility } = req.body;
+        const { latitude, longitude, contactid, contactinfo, title, address, description, largeDescription,
+            state, releaseDate,
+            GeologicalAgesOptions,
+            ClasticSedimentologyOptions,
+            CarbonateAndEvaporiteSedimentologyOptions,
+            MetamorphicOptions,
+            ExtrusiveIgneousOptions,
+            IntrusiveIgneousOptions,
+            StructureOptions,
+            FossilsOptions,
+            QuaternaryGeomorphologyOptions,
+            modelLink,
+            author, license, tags, size, smallestVisibleFeature, contributors, citation, visibility } = req.body;
+
+            console.log('req.body', req.body)
 
         // Ensure we structure the coordinates field correctly
         const coordinates = {
@@ -154,7 +168,18 @@ app.post('/addmodel', async (req, res) => {
             description,
             largeDescription,
             info: {
+                state,
                 releaseDate,
+                modelLink,
+                GeologicalAgesOptions,
+                ClasticSedimentologyOptions,
+                CarbonateAndEvaporiteSedimentologyOptions,
+                MetamorphicOptions,
+                ExtrusiveIgneousOptions,
+                IntrusiveIgneousOptions,
+                StructureOptions,
+                FossilsOptions,
+                QuaternaryGeomorphologyOptions,
                 author,
                 license,
                 tags,
@@ -237,7 +262,7 @@ app.post('/getmodel', async (req, res) => {
     try {
         // Query MongoDB to find model data by the provided index
         const data = await ModelData.findOne({ index: index });
-        
+
         // If data is not found, send a 404 response
         if (!data) {
             return res.status(404).send({ status: "error", data: "Model not found" });
