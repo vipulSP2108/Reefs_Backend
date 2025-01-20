@@ -191,6 +191,23 @@ app.post('/addmodel', async (req, res) => {
             visibility,
         });
 
+        // const requiredFields = [
+        //     'latitude', 'longitude', 'contactid', 'contactinfo', 'title', 'address', 'description', 'largeDescription',
+        //     'state', 'releaseDate', 
+        //      'modelLink', 'author', 'license', 'tags', 
+        //     'size', 'smallestVisibleFeature', 'contributors', 'citation', 'visibility'
+        // ];
+
+        // // Check if all required fields are present in the request body
+        // for (let field of requiredFields) {
+        //     if (!req.body[field]) {
+        //         return res.status(400).json({
+        //             status: "error",
+        //             message: `Missing required field: ${field}`
+        //         });
+        //     }
+        // }
+
         // Save the new record to the database
         await newRecord.save();
 
@@ -199,7 +216,7 @@ app.post('/addmodel', async (req, res) => {
 
     } catch (error) {
         console.error("Error adding record:", error);
-        res.status(400).json({ status: "error", message: 'Error adding record', error: error.message });
+        res.status(400).json({ status: "error", message: error.message, error: error.message });
     }
 });
 
